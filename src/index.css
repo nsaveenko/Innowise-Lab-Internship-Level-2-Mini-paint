@@ -11,6 +11,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+ul {
+  list-style-type: none;
+}
+
 .wrapper {
   max-width: 762px;
   width: 100%;
@@ -20,5 +24,34 @@ body {
   display: flex;
   align-items: center;
   flex-direction: column;
-  color: #1a1a1a;
+  color: #3d5738;
+}
+
+.primary-button {
+  background-color: #3d5738;
+  color: #e0dddb;
+  border: 1px solid #3d5738;
+  border-radius: 5px;
+  padding: 10px;
+  cursor: pointer;
+  outline: none;
+}
+
+.primary-button:hover {
+  background-color: #e0dddb;
+  border: 1px solid #e0dddb;
+  color:  #3d5738;
+}
+
+.secondary-button {
+  padding-left: 10px;
+  padding-right: 10px;
+  display: flex;
+  color: #ff632c;
+  cursor: pointer;
+}
+
+.secondary-button:hover {
+  transform: scale(1.1);
+  color: #f9c83e;
 }
