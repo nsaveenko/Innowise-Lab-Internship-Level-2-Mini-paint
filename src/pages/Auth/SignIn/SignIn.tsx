@@ -1,18 +1,48 @@
-import React, { FC } from 'react';
-import { NavLink } from 'react-router-dom';
+import React, { FC, useState } from 'react';
+import { NavLink, useHistory } from 'react-router-dom';
+import ERRORS from '../../../utils/errors';
+import { useAuth } from '../../../contexts/AuthContext';
 import '../Auth.css';
 
 const SignIn: FC = () => {
+  const history = useHistory();
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string>('');
+  const { signin } = useAuth();
+
+  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
+  async function handleSubmit(e: React.MouseEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    try {
+      await signin(email, password);
+      history.push('/');
+    } catch {
+      setError(ERRORS.SIGN_IN_MESSAGE);
+    }
+  }
+
   return (
     <div className='wrapper'>
       <h2 className='auth-title'>SignIn</h2>
-      <form className='auth-form'>
+      {error && <p className='error-message'>{error}</p>}
+      <form className='auth-form' onSubmit={handleSubmit}>
         <div className='auth-input-container'>
           <h3 className='input-title'>Email</h3>
           <input
             className='auth-input'
             type='email'
             autoComplete='on'
+            onChange={handleChangeEmail}
+            value={email}
             required
           />
         </div>
@@ -22,6 +52,8 @@ const SignIn: FC = () => {
             className='auth-input'
             type='password'
             autoComplete='on'
+            onChange={handleChangePassword}
+            value={password}
             required
           />
         </div>

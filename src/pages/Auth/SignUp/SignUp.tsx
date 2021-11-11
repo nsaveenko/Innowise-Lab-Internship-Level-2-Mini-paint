@@ -1,13 +1,11 @@
 import React, { FC, useState } from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
-import { auth } from '../../../api/index';
+import { useAuth } from '../../../contexts/AuthContext';
 import ERRORS from '../../../utils/errors';
 import '../Auth.css';
 
 const SignUp: FC = () => {
-  const signup = (email: string, password: string) => {
-    return auth.createUserWithEmailAndPassword(email, password);
-  };
+  const { signup } = useAuth();
   const history = useHistory();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');

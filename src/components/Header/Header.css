@@ -1,0 +1,38 @@
+.header {
+  max-width: 762px;
+  width: 100%;
+  margin-top: 10px;
+  padding: 30px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  color: #3d5738;
+}
+
+.header-button {
+  width: 100px;
+}
+
+.page-title {
+  width: 36%;
+  font-weight: 400;
+  cursor: pointer;
+  text-decoration: none;
+  color: #3d5738;
+}
+
+.page-title:hover {
+  text-decoration: underline;
+}
+
+.email-title {
+  font-weight: 300;
+}
+
+@media (max-width: 450px) {
+  .email-title {
+    display: none;
+  }
+}
