@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import './Canvas.css';
+import uploadPic from '../../utils/uploadPic';
 import { ICanvas } from './ICanvas';
+import './Canvas.css';
 
-export default function Canvas({ color, width }: ICanvas) {
+export default function Canvas({ color, width, tool }: ICanvas) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const canvasCtxRef = React.useRef<CanvasRenderingContext2D | null>(null);
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
@@ -18,16 +19,17 @@ export default function Canvas({ color, width }: ICanvas) {
     }
   }, []);
 
+  const clear = () => {
+    ctx!.clearRect(0, 0, ctx!.canvas.width, ctx!.canvas.height);
+  };
+
   const draw = (x: number, y: number) => {
     if (isMouseDown) {
       ctx!.beginPath();
       ctx!.strokeStyle = color;
       ctx!.lineWidth = +width;
       ctx!.lineJoin = 'round';
-      ctx!.moveTo(
-        previousPosition.x,
-        previousPosition.y,
-      );
+      ctx!.moveTo(previousPosition.x, previousPosition.y);
       ctx!.lineTo(x, y);
       ctx!.closePath();
       ctx!.stroke();
@@ -36,11 +38,46 @@ export default function Canvas({ color, width }: ICanvas) {
     }
   };
 
+  const drawLine = (x: number, y: number) => {
+    if (isMouseDown) {
+      clear();
+      ctx!.beginPath();
+      ctx!.lineJoin = 'round';
+      ctx!.strokeStyle = color;
+      ctx!.lineWidth = +width;
+      ctx!.moveTo(
+        previousPosition.x,
+        previousPosition.y,
+      );
+      ctx!.lineTo(x, y);
+      ctx!.stroke();
+    }
+  };
+
+  const drawRectangle = (x: number, y: number) => {
+    if (isMouseDown) {
+      clear();
+      ctx!.strokeStyle = color;
+      const recWidth = x - previousPosition.x;
+      const recHeight = y - previousPosition.y;
+      ctx!.strokeRect(previousPosition.x, previousPosition.y, recWidth, recHeight);
+    }
+  };
+
+  const drawCircle = (x: number, y: number) => {
+    const radius = Math.sqrt((x - y) ** 2);
+    if (isMouseDown) {
+      clear();
+      ctx!.beginPath();
+      ctx!.arc(previousPosition.x, previousPosition.y, radius, 0, 2 * Math.PI, false);
+      ctx!.stroke();
+    }
+  };
+
   const startDraw = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    setPosition({
-      x: e.nativeEvent.offsetX,
-      y: e.nativeEvent.offsetY,
-    });
+    const x = e.nativeEvent.offsetX;
+    const y = e.nativeEvent.offsetY;
+    setPosition({ x, y });
     setIsMouseDown(true);
   };
 
@@ -49,21 +86,32 @@ export default function Canvas({ color, width }: ICanvas) {
   };
 
   const onMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    draw(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
-  };
-
-  const clear = () => {
-    ctx!.clearRect(0, 0, ctx!.canvas.width, ctx!.canvas.height);
+    switch (tool) {
+      case 'pen':
+        draw(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+        break;
+      case 'line':
+        drawLine(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+        break;
+      case 'rectangle':
+        drawRectangle(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+        break;
+      case 'circle':
+        drawCircle(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+        break;
+      default:
+        draw(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+        break;
+    }
   };
 
   const download = async () => {
     const image = ctx!.canvas.toDataURL('image/png');
     const blob = await (await fetch(image)).blob();
     const blobURL = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = blobURL;
-    link.download = 'image.png';
-    link.click();
+    const pic = new Image();
+    pic.src = blobURL;
+    uploadPic(pic);
   };
 
   return (
