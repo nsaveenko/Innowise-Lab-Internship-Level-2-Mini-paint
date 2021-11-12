@@ -25,6 +25,27 @@
   color: #3d5738;
 }
 
+.active {
+  color: #28385f;
+  transform: scale(1.1);
+}
+
 .tool-item:hover {
   transform: scale(1.1);
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltip-item {
+  visibility: hidden;
+  padding: 40px 0;
+  position: absolute;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltip-item {
+  visibility: visible;
 }

@@ -1,18 +1,32 @@
-import React from 'react';
+import React, { FC, useState } from 'react';
 import Header from '../../components/Header/Header';
 import Canvas from '../../components/Canvas/Canvas';
 import Tools from '../../components/Tools/Tools';
 import './Editor.css';
 
-const Editor: React.FC = () => {
+const Editor: FC = () => {
+  const [color, setColor] = useState<string>('#f56293');
+  const [width, setWidth] = useState<string>('25');
+  const [tool, setTool] = useState<string>('pen');
+
   return (
     <>
       <Header />
       <div className='wrapper'>
         <h2>Editor</h2>
         <div className='editor-container'>
-          <Tools />
-          <Canvas />
+          <Tools
+            color={color}
+            width={width}
+            setColor={setColor}
+            setWidth={setWidth}
+            setTool={setTool}
+          />
+          <Canvas
+            width={width}
+            color={color}
+            tool={tool}
+          />
         </div>
       </div>
     </>

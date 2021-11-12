@@ -1,43 +1,91 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './Canvas.css';
+import { ICanvas } from './ICanvas';
 
-export default function Canvas() {
-  const canvasRef = useRef(null);
-  // const contextRef = useRef(null);
+export default function Canvas({ color, width }: ICanvas) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const canvasCtxRef = React.useRef<CanvasRenderingContext2D | null>(null);
+  const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
+  const [previousPosition, setPosition] = useState({
+    x: 0,
+    y: 0,
+  });
+  const ctx = canvasCtxRef.current;
 
   useEffect(() => {
-    const canvas = document.querySelector('#canvas') as HTMLCanvasElement;
-    // const context = canvas.getContext('2d') as CanvasRenderingContext2D;
-    // context.fillStyle = '#e0dddb';
-    // context.fillRect(10, 10, 150, 100);
-    // const canvas = canvasRef.current as HTMLCanvasElement;
-    const context = canvas.getContext('2d') as CanvasRenderingContext2D;
-    context.scale(2, 2);
-    context.strokeStyle = 'black';
-    context.lineCap = 'round';
-    context.lineWidth = 5;
-  });
+    if (canvasRef.current) {
+      canvasCtxRef.current = canvasRef.current.getContext('2d');
+    }
+  }, []);
+
+  const draw = (x: number, y: number) => {
+    if (isMouseDown) {
+      ctx!.beginPath();
+      ctx!.strokeStyle = color;
+      ctx!.lineWidth = +width;
+      ctx!.lineJoin = 'round';
+      ctx!.moveTo(
+        previousPosition.x,
+        previousPosition.y,
+      );
+      ctx!.lineTo(x, y);
+      ctx!.closePath();
+      ctx!.stroke();
+
+      setPosition({ x, y });
+    }
+  };
 
   const startDraw = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    // contextRef.current.beginPath();
-    console.log(e);
+    setPosition({
+      x: e.nativeEvent.offsetX,
+      y: e.nativeEvent.offsetY,
+    });
+    setIsMouseDown(true);
   };
 
-  const finishDraw = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    console.log(e);
+  const finishDraw = () => {
+    setIsMouseDown(false);
   };
 
-  const draw = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    console.log(e);
+  const onMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    draw(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+  };
+
+  const clear = () => {
+    ctx!.clearRect(0, 0, ctx!.canvas.width, ctx!.canvas.height);
+  };
+
+  const download = async () => {
+    const image = ctx!.canvas.toDataURL('image/png');
+    const blob = await (await fetch(image)).blob();
+    const blobURL = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = blobURL;
+    link.download = 'image.png';
+    link.click();
   };
 
   return (
-    <canvas
-      onMouseDown={startDraw}
-      onMouseUp={finishDraw}
-      onMouseMove={draw}
-      ref={canvasRef}
-      id='canvas'
-    />
+    <>
+      <canvas
+        width={500}
+        height={500}
+        onMouseDown={startDraw}
+        onMouseUp={finishDraw}
+        onMouseMove={onMouseMove}
+        onMouseLeave={finishDraw}
+        ref={canvasRef}
+        id='canvas'
+      />
+      <div className='canvas-addictional-container'>
+        <button className='primary-button' type='submit' onClick={clear}>
+          Clear
+        </button>
+        <button className='primary-button' type='submit' onClick={download}>
+          Save
+        </button>
+      </div>
+    </>
   );
 }
