@@ -11,6 +11,7 @@ export default function Canvas({ color, width, tool }: ICanvas) {
     x: 0,
     y: 0,
   });
+
   const ctx = canvasCtxRef.current;
 
   useEffect(() => {
@@ -58,6 +59,7 @@ export default function Canvas({ color, width, tool }: ICanvas) {
     if (isMouseDown) {
       clear();
       ctx!.strokeStyle = color;
+      ctx!.lineWidth = +width;
       const recWidth = x - previousPosition.x;
       const recHeight = y - previousPosition.y;
       ctx!.strokeRect(previousPosition.x, previousPosition.y, recWidth, recHeight);
@@ -65,6 +67,8 @@ export default function Canvas({ color, width, tool }: ICanvas) {
   };
 
   const drawCircle = (x: number, y: number) => {
+    ctx!.strokeStyle = color;
+    ctx!.lineWidth = +width;
     const radius = Math.sqrt((x - y) ** 2);
     if (isMouseDown) {
       clear();
@@ -86,31 +90,30 @@ export default function Canvas({ color, width, tool }: ICanvas) {
   };
 
   const onMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    switch (tool) {
-      case 'pen':
-        draw(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
-        break;
-      case 'line':
-        drawLine(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
-        break;
-      case 'rectangle':
-        drawRectangle(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
-        break;
-      case 'circle':
-        drawCircle(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
-        break;
-      default:
-        draw(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
-        break;
+    if (isMouseDown) {
+      switch (tool) {
+        case 'pen':
+          draw(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+          break;
+        case 'line':
+          drawLine(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+          break;
+        case 'rectangle':
+          drawRectangle(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+          break;
+        case 'circle':
+          drawCircle(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+          break;
+        default:
+          draw(e.nativeEvent.offsetX, e.nativeEvent.offsetY);
+          break;
+      }
     }
   };
 
   const download = async () => {
-    const image = ctx!.canvas.toDataURL('image/png');
-    const blob = await (await fetch(image)).blob();
-    const blobURL = URL.createObjectURL(blob);
-    const pic = new Image();
-    pic.src = blobURL;
+    const url = ctx!.canvas.toDataURL();
+    const pic = url.substring(22, url.length);
     uploadPic(pic);
   };
 

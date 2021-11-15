@@ -5,7 +5,7 @@ import Tools from '../../components/Tools/Tools';
 import './Editor.css';
 
 const Editor: FC = () => {
-  const [color, setColor] = useState<string>('#f56293');
+  const [color, setColor] = useState<string>('#3d5738');
   const [width, setWidth] = useState<string>('5');
   const [tool, setTool] = useState<string>('pen');
 
