@@ -1,9 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react';
-import uploadPic from '../../utils/uploadPic';
+import { useHistory } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
+import { usePics } from '../../contexts/PicsContext';
 import { ICanvas } from './ICanvas';
 import './Canvas.css';
 
 export default function Canvas({ color, width, tool }: ICanvas) {
+  const history = useHistory();
+  const { currentUser } = useAuth();
+  const { uploadPic, getPosts } = usePics();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const canvasCtxRef = React.useRef<CanvasRenderingContext2D | null>(null);
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
@@ -114,7 +119,9 @@ export default function Canvas({ color, width, tool }: ICanvas) {
   const download = async () => {
     const url = ctx!.canvas.toDataURL();
     const pic = url.substring(22, url.length);
-    uploadPic(pic);
+    uploadPic(pic, currentUser.email);
+    getPosts();
+    history.push('/');
   };
 
   return (

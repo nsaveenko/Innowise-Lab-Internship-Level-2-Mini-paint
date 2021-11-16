@@ -8,7 +8,7 @@
   flex-direction: row;
   align-items: flex-end;
   justify-content: space-between;
-  color: #3d5738;
+  color: #fff;
 }
 
 .header-button {
@@ -20,7 +20,11 @@
   font-weight: 400;
   cursor: pointer;
   text-decoration: none;
-  color: #3d5738;
+  color: #fff;
+}
+
+.page-title:visited {
+  color: #fff;
 }
 
 .page-title:hover {

@@ -14,7 +14,7 @@
   flex-direction: row;
   border: 1px solid transparent;
   border-radius: 20px;
-  background-color: #e0dddb;
+  background-color: #fff;
 }
 
 .tool-item {
@@ -22,12 +22,7 @@
   cursor: pointer;
   outline: none;
   background-color: transparent;
-  color: #3d5738;
-}
-
-.active {
-  color: #28385f;
-  transform: scale(1.1);
+  color: #212529;
 }
 
 .tool-item:hover {

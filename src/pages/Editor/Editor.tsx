@@ -5,7 +5,7 @@ import Tools from '../../components/Tools/Tools';
 import './Editor.css';
 
 const Editor: FC = () => {
-  const [color, setColor] = useState<string>('#3d5738');
+  const [color, setColor] = useState<string>('#000');
   const [width, setWidth] = useState<string>('5');
   const [tool, setTool] = useState<string>('pen');
 
@@ -22,6 +22,10 @@ const Editor: FC = () => {
             setWidth={setWidth}
             setTool={setTool}
           />
+          <h4 className='tool-title'>
+            <strong>Active tool:</strong>
+            { tool }
+          </h4>
           <Canvas
             width={width}
             color={color}

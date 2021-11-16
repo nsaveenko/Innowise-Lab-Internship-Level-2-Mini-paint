@@ -1,21 +1,21 @@
 import React, { FC, useContext, useEffect, useState } from 'react';
 import { auth } from '../api/index';
 
-export interface AuthContextInterface {
+export interface IAuthContext {
   signin?: any;
   signup?: any | null;
   signout?: any;
   currentUser?: any;
 }
 
-const AuthContext = React.createContext<AuthContextInterface>({});
+const AuthContext = React.createContext<IAuthContext>({});
 
-export function useAuth(): AuthContextInterface {
+export function useAuth(): IAuthContext {
   return useContext(AuthContext);
 }
 
 const AuthProvider: FC = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [currentUser, setCurrentUser] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
 
   const signup = (email: string, password: string) => {
@@ -32,14 +32,14 @@ const AuthProvider: FC = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      setCurrentUser(user);
+      setCurrentUser(user?.email || '');
       setLoading(false);
     });
 
     return unsubscribe;
   }, []);
 
-  const value: AuthContextInterface = {
+  const value: IAuthContext = {
     signin,
     signup,
     signout,

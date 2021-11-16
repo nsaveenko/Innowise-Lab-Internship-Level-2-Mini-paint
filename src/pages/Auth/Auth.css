@@ -1,5 +1,5 @@
 .auth-title {
-  color: #3d5738;
+  color: #fff;
 }
 
 .auth-form {
@@ -17,21 +17,22 @@
   margin: 20px;
   display: flex;
   flex-direction: column;
-  color: #3d5738;
+  color: #fff;
   width: 100%;
 }
 
 .auth-input {
+  padding: 10px;
   outline: 0;
   cursor: pointer;
-  border-width: 0 0 1px;
-  border-color: #8e9190;
+  border-width: 0 0 2px;
+  border-color:#48b3b8;
   background-color: transparent;
-  color: #3d5738;
+  color: #fff;
 }
 
 .auth-input:hover, .auth-input:active, .auth-input:focus {
-  border-color:#3d5738;
+  border-color: #fff;
 }
 
 .input-title {
@@ -41,19 +42,19 @@
 .auth-info {
   font-weight: 300;
   font-size: 16px;
-  color: #8e9190;
+  color: #fff;
 }
 
 .link {
   margin-left: 5px;
-  color: #8e9190;
+  color: #fff;
   text-decoration: none;
-  border-bottom: 1px solid #3d5738;
+  border-bottom: 1px solid #fff;
 }
 
 .link:hover {
-  color: #588167;
-  border-bottom: 1px solid #588167;
+  color: #212529;
+  border-bottom: 1px solid #fff;
 }
 
 .error-message {
