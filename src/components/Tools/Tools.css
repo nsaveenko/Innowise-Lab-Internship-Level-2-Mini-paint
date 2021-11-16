@@ -35,6 +35,7 @@
 }
 
 .tooltip .tooltip-item {
+  margin-left: -50px;
   visibility: hidden;
   padding: 40px 0;
   position: absolute;
