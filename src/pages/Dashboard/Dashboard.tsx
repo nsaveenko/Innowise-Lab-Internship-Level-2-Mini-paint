@@ -5,10 +5,10 @@ import { IPosts, usePics } from '../../contexts/PicsContext';
 import './Dashboard.css';
 
 const Dashboard: FC = () => {
-  const { currentUser } = useAuth();
+  const { currentUserEmail } = useAuth();
   const { posts, getPosts } = usePics();
   const users = Array.from(new Set(posts?.map((post) => post.email)));
-  const [userSelectValue, setUserSelectValue] = useState(currentUser);
+  const [userSelectValue, setUserSelectValue] = useState(currentUserEmail);
 
   useEffect(() => {
     getPosts();
@@ -24,7 +24,7 @@ const Dashboard: FC = () => {
       <div className='wrapper'>
         <div className='main-content'>
           <h2>
-            Filter pics by user:
+            Filter pics by users:
           </h2>
           <select className='select-user' value={userSelectValue} onChange={handleUserSelectChange}>
             {

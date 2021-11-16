@@ -6,7 +6,7 @@ import './Header.css';
 
 export default function Header() {
   const history = useHistory();
-  const { currentUser, signout } = useAuth();
+  const { currentUserEmail, signout } = useAuth();
   const [error, setError] = useState<string>('');
 
   async function handleLogOut() {
@@ -32,7 +32,7 @@ export default function Header() {
   return (
     <div className='header'>
       <NavLink to='/' className='page-title'>Paint</NavLink>
-      <h3 className='email-title'>{currentUser.email}</h3>
+      <h3 className='email-title'>{currentUserEmail}</h3>
       <button
         className='primary-button header-button'
         type='submit'

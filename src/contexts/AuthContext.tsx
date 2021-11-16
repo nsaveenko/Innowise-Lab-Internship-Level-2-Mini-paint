@@ -5,7 +5,7 @@ export interface IAuthContext {
   signin?: any;
   signup?: any | null;
   signout?: any;
-  currentUser?: any;
+  currentUserEmail?: any;
 }
 
 const AuthContext = React.createContext<IAuthContext>({});
@@ -15,7 +15,7 @@ export function useAuth(): IAuthContext {
 }
 
 const AuthProvider: FC = ({ children }) => {
-  const [currentUser, setCurrentUser] = useState<string>('');
+  const [currentUserEmail, setCurrentUserEmail] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
 
   const signup = (email: string, password: string) => {
@@ -32,7 +32,7 @@ const AuthProvider: FC = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      setCurrentUser(user?.email || '');
+      setCurrentUserEmail(user?.email || '');
       setLoading(false);
     });
 
@@ -43,7 +43,7 @@ const AuthProvider: FC = ({ children }) => {
     signin,
     signup,
     signout,
-    currentUser,
+    currentUserEmail,
   };
 
   return (
