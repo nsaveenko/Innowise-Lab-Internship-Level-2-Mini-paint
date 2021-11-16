@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import ERRORS from '../../utils/errors';
@@ -22,7 +23,7 @@ export default function Header() {
   }
 
   if (error !== '') {
-    alert(error);
+    toast.error(error);
   }
 
   const handleDraw = () => {
@@ -31,6 +32,7 @@ export default function Header() {
 
   return (
     <div className='header'>
+      <Toaster position='top-right' />
       <NavLink to='/' className='page-title'>Paint</NavLink>
       <h3 className='email-title'>{currentUserEmail}</h3>
       <button

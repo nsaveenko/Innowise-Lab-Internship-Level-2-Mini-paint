@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
 import ERRORS from '../../../utils/errors';
@@ -10,7 +11,6 @@ const SignUp: FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
-  const [error, setError] = useState<string>('');
   const [loading, setLoading] = useState<boolean>();
 
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,17 +29,17 @@ const SignUp: FC = () => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      setError(ERRORS.SIGN_UP_MESSAGE_PASSWORD_CONFIRMATION);
+      toast.error(ERRORS.SIGN_UP_MESSAGE_PASSWORD_CONFIRMATION);
     } else if (password.length < 6) {
-      setError(ERRORS.SIGN_UP_MESSAGE_PASSWORD_LENGTH);
+      toast.error(ERRORS.SIGN_UP_MESSAGE_PASSWORD_LENGTH);
     } else {
       try {
-        setError('');
         setLoading(true);
         await signup(email, password);
+        toast.success('Created!');
         history.push('/signin');
       } catch {
-        setError(ERRORS.SIGN_UP_MESSAGE_ACCOUNT_CREATION);
+        toast.error(ERRORS.SIGN_UP_MESSAGE_ACCOUNT_CREATION);
       }
       setLoading(false);
     }
@@ -48,7 +48,7 @@ const SignUp: FC = () => {
   return (
     <div className='wrapper'>
       <h2 className='auth-title'>Sign Up</h2>
-      {error && <p className='error-message'>{error}</p>}
+      <Toaster position='top-right' />
       <form className='auth-form' onSubmit={handleSubmit}>
         <div className='auth-input-container'>
           <h3 className='input-title'>Email</h3>

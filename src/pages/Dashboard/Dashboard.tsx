@@ -23,22 +23,39 @@ const Dashboard: FC = () => {
       <Header />
       <div className='wrapper'>
         <div className='main-content'>
-          <h2>
-            Filter pics by users:
-          </h2>
-          <select className='select-user' value={userSelectValue} onChange={handleUserSelectChange}>
-            {
-              users.map((user) => <option key={user} value={user}>{user}</option>)
-            }
+          <h2>Filter pics by users:</h2>
+          <select
+            className='select-user'
+            value={userSelectValue}
+            onChange={handleUserSelectChange}
+          >
+            {users.length > 0 ? (
+              users.map((user) => (
+                <option key={user} value={user}>
+                  {user}
+                </option>
+              ))
+            ) : (
+              <option>no users</option>
+            )}
           </select>
         </div>
         <ul className='pics-list'>
-          {
-          posts ? posts?.filter((post: IPosts) => post.email.indexOf(userSelectValue) !== -1)
-            .map((post: IPosts) => {
-              return (<li key={post.id} className='pic-item'><img src={post.path} alt='pic from firebase' /></li>);
-            }) : <h3>Loading...</h3>
-          }
+          {posts ? (
+            posts
+              ?.filter(
+                (post: IPosts) => post.email.indexOf(userSelectValue) !== -1,
+              )
+              .map((post: IPosts) => {
+                return (
+                  <li key={post.id} className='pic-item'>
+                    <img src={post.path} alt='pic from firebase' />
+                  </li>
+                );
+              })
+          ) : (
+            <h3>Loading...</h3>
+          )}
         </ul>
       </div>
     </>

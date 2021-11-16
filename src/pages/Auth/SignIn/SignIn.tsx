@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 import { NavLink, useHistory } from 'react-router-dom';
 import ERRORS from '../../../utils/errors';
 import { useAuth } from '../../../contexts/AuthContext';
@@ -8,7 +9,6 @@ const SignIn: FC = () => {
   const history = useHistory();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [error, setError] = useState<string>('');
   const { signin } = useAuth();
 
   const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,14 +26,14 @@ const SignIn: FC = () => {
       await signin(email, password);
       history.push('/');
     } catch {
-      setError(ERRORS.SIGN_IN_MESSAGE);
+      toast.error(ERRORS.SIGN_IN_MESSAGE);
     }
   }
 
   return (
     <div className='wrapper'>
       <h2 className='auth-title'>SignIn</h2>
-      {error && <p className='error-message'>{error}</p>}
+      <Toaster position='top-right' />
       <form className='auth-form' onSubmit={handleSubmit}>
         <div className='auth-input-container'>
           <h3 className='input-title'>Email</h3>

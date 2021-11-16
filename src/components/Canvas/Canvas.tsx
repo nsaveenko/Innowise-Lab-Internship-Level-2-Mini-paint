@@ -1,14 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { usePics } from '../../contexts/PicsContext';
 import { ICanvas } from './ICanvas';
 import './Canvas.css';
 
 export default function Canvas({ color, width, tool }: ICanvas) {
-  const history = useHistory();
   const { currentUserEmail } = useAuth();
-  const { uploadPic, getPosts } = usePics();
+  const { uploadPic } = usePics();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const canvasCtxRef = React.useRef<CanvasRenderingContext2D | null>(null);
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
@@ -30,57 +28,49 @@ export default function Canvas({ color, width, tool }: ICanvas) {
   };
 
   const draw = (x: number, y: number) => {
-    if (isMouseDown) {
-      ctx!.beginPath();
-      ctx!.strokeStyle = color;
-      ctx!.lineWidth = +width;
-      ctx!.lineJoin = 'round';
-      ctx!.moveTo(previousPosition.x, previousPosition.y);
-      ctx!.lineTo(x, y);
-      ctx!.closePath();
-      ctx!.stroke();
+    ctx!.beginPath();
+    ctx!.strokeStyle = color;
+    ctx!.lineWidth = +width;
+    ctx!.lineJoin = 'round';
+    ctx!.moveTo(previousPosition.x, previousPosition.y);
+    ctx!.lineTo(x, y);
+    ctx!.closePath();
+    ctx!.stroke();
 
-      setPosition({ x, y });
-    }
+    setPosition({ x, y });
   };
 
   const drawLine = (x: number, y: number) => {
-    if (isMouseDown) {
-      clear();
-      ctx!.beginPath();
-      ctx!.lineJoin = 'round';
-      ctx!.strokeStyle = color;
-      ctx!.lineWidth = +width;
-      ctx!.moveTo(
-        previousPosition.x,
-        previousPosition.y,
-      );
-      ctx!.lineTo(x, y);
-      ctx!.stroke();
-    }
+    clear();
+    ctx!.beginPath();
+    ctx!.lineJoin = 'round';
+    ctx!.strokeStyle = color;
+    ctx!.lineWidth = +width;
+    ctx!.moveTo(
+      previousPosition.x,
+      previousPosition.y,
+    );
+    ctx!.lineTo(x, y);
+    ctx!.stroke();
   };
 
   const drawRectangle = (x: number, y: number) => {
-    if (isMouseDown) {
-      clear();
-      ctx!.strokeStyle = color;
-      ctx!.lineWidth = +width;
-      const recWidth = x - previousPosition.x;
-      const recHeight = y - previousPosition.y;
-      ctx!.strokeRect(previousPosition.x, previousPosition.y, recWidth, recHeight);
-    }
+    clear();
+    ctx!.strokeStyle = color;
+    ctx!.lineWidth = +width;
+    const recWidth = x - previousPosition.x;
+    const recHeight = y - previousPosition.y;
+    ctx!.strokeRect(previousPosition.x, previousPosition.y, recWidth, recHeight);
   };
 
   const drawCircle = (x: number, y: number) => {
     ctx!.strokeStyle = color;
     ctx!.lineWidth = +width;
     const radius = Math.sqrt((x - y) ** 2);
-    if (isMouseDown) {
-      clear();
-      ctx!.beginPath();
-      ctx!.arc(previousPosition.x, previousPosition.y, radius, 0, 2 * Math.PI, false);
-      ctx!.stroke();
-    }
+    clear();
+    ctx!.beginPath();
+    ctx!.arc(previousPosition.x, previousPosition.y, radius, 0, 2 * Math.PI, false);
+    ctx!.stroke();
   };
 
   const startDraw = (e: React.MouseEvent<HTMLCanvasElement>) => {
@@ -119,13 +109,8 @@ export default function Canvas({ color, width, tool }: ICanvas) {
   const download = async () => {
     const url = ctx!.canvas.toDataURL();
     const pic = url.substring(22, url.length);
-    uploadPic(pic, currentUserEmail);
-    history.push('/');
+    await uploadPic(pic, currentUserEmail);
   };
-
-  useEffect(() => {
-    getPosts();
-  }, [uploadPic]);
 
   return (
     <>
