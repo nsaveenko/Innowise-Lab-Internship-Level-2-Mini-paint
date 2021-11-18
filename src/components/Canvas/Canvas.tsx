@@ -73,7 +73,7 @@ export default function Canvas({ color, width, tool }: ICanvas) {
     ctx!.stroke();
   };
 
-  const startDraw = (e: React.MouseEvent<HTMLCanvasElement>) => {
+  const onMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
     const x = e.nativeEvent.offsetX;
     const y = e.nativeEvent.offsetY;
     setPosition({ x, y });
@@ -117,7 +117,7 @@ export default function Canvas({ color, width, tool }: ICanvas) {
       <canvas
         width={500}
         height={500}
-        onMouseDown={startDraw}
+        onMouseDown={onMouseDown}
         onMouseUp={finishDraw}
         onMouseMove={onMouseMove}
         onMouseLeave={finishDraw}

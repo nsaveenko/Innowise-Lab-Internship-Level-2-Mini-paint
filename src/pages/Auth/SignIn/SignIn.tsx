@@ -24,7 +24,7 @@ const SignIn: FC = () => {
 
     try {
       await signin(email, password);
-      history.push('/');
+      history.push('/editor');
     } catch {
       toast.error(ERRORS.SIGN_IN_MESSAGE);
     }
