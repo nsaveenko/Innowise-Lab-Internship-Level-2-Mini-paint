@@ -64,15 +64,6 @@ const PicsProvider: FC = ({ children }) => {
       });
   };
 
-  function getPosts() {
-    ref
-      .orderBy('date', 'desc')
-      .get().then((item) => {
-        const items = item.docs.map((doc: any) => doc.data());
-        setPosts(items);
-      });
-  }
-
   useEffect(() => {
     if (!id) return;
     addPost({
@@ -86,7 +77,6 @@ const PicsProvider: FC = ({ children }) => {
   const value: IPicsContext = {
     uploadPic,
     addPost,
-    getPosts,
     posts,
   };
 

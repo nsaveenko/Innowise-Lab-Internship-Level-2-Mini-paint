@@ -1,18 +1,26 @@
 import React, { FC, useEffect, useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
 import Header from '../../components/Header/Header';
 import { useAuth } from '../../contexts/AuthContext';
-import { IPosts, usePics } from '../../contexts/PicsContext';
+import useTypedSelector from '../../hooks/postTypeSelector';
+import fetchPosts from '../../store/action-creators/post';
 import './Dashboard.css';
 
 const Dashboard: FC = () => {
+  const { posts, error, loading } = useTypedSelector((state) => state.post);
+  const dispatch = useDispatch();
   const { currentUserEmail } = useAuth();
-  const { posts, getPosts } = usePics();
   const users = Array.from(new Set(posts?.map((post) => post.email)));
   const [userSelectValue, setUserSelectValue] = useState(currentUserEmail);
 
   useEffect(() => {
-    getPosts();
+    dispatch(fetchPosts);
   }, []);
+
+  if (error) {
+    toast.error(error);
+  }
 
   const handleUserSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setUserSelectValue(e.target.value);
@@ -20,6 +28,7 @@ const Dashboard: FC = () => {
 
   return (
     <>
+      <Toaster position='top-right' />
       <Header />
       <div className='wrapper'>
         <div className='main-content'>
@@ -41,21 +50,20 @@ const Dashboard: FC = () => {
           </select>
         </div>
         <ul className='pics-list'>
-          {posts ? (
+          {loading && <h3>Loading....</h3>}
+          {
             posts
               ?.filter(
-                (post: IPosts) => post.email.indexOf(userSelectValue) !== -1,
+                (post) => post.email.indexOf(userSelectValue) !== -1,
               )
-              .map((post: IPosts) => {
+              .map((post) => {
                 return (
                   <li key={post.id} className='pic-item'>
                     <img src={post.path} alt='pic from firebase' />
                   </li>
                 );
               })
-          ) : (
-            <h3>Loading...</h3>
-          )}
+          }
         </ul>
       </div>
     </>
