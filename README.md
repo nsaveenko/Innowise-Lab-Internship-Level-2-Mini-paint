@@ -28,12 +28,14 @@ Screenshot of uploaded pics from storage in firestore:
 Several screenshots of the application:
 1. Page for drawing:
 ![image](https://user-images.githubusercontent.com/31535378/142017652-f270d903-b3e2-4c82-8431-483ef243d2f8.png)
+![image](https://user-images.githubusercontent.com/31535378/142665179-bb169a92-ddd5-4bda-afc6-d470d1eb8a49.png)
+![image](https://user-images.githubusercontent.com/31535378/142665223-bbe4b172-ebcf-4723-90ec-dce7deeb6a08.png)
+![image](https://user-images.githubusercontent.com/31535378/142665267-38ffee5d-8624-40b8-b014-4253812833d4.png)
 
 2. Dashboard page:
 
-![image](https://user-images.githubusercontent.com/31535378/142017758-462ac9ed-b0c9-4111-bb12-2575c2c08bdc.png)
-
-![image](https://user-images.githubusercontent.com/31535378/142017859-cc301f25-5f19-46cf-a462-1d466b48bf0b.png)
+![image](https://user-images.githubusercontent.com/31535378/142665437-d35f3476-97fa-4d08-b810-7ffbc0b3a69e.png)
+![image](https://user-images.githubusercontent.com/31535378/142665626-02a92c63-ed68-434a-82a6-7a08fe044e42.png)
 
 3. Sing In page:
  
@@ -46,3 +48,9 @@ Several screenshots of the application:
 6. Example of error handling:
 
 ![image](https://user-images.githubusercontent.com/31535378/142016793-4369f597-7868-4fad-bc38-d513fba41fcc.png)
+
+7. Mobile version: 
+
+![image](https://user-images.githubusercontent.com/31535378/142665789-6eb93541-c91d-42dd-bf0b-0eeaedb368ce.png)
+![image](https://user-images.githubusercontent.com/31535378/142665821-1c7b4036-3ed5-4bb5-b4c9-94e0724b535b.png)
+
