@@ -1,12 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useAuth } from '../../contexts/AuthContext';
-import { usePics } from '../../contexts/PicsContext';
 import { ICanvas } from './ICanvas';
 import './Canvas.css';
 
-export default function Canvas({ color, width, tool }: ICanvas) {
-  const { currentUserEmail } = useAuth();
-  const { uploadPic } = usePics();
+export default function Canvas({ color, width, tool, uploadPic }: ICanvas) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const canvasCtxRef = React.useRef<CanvasRenderingContext2D | null>(null);
   const [isMouseDown, setIsMouseDown] = useState<boolean>(false);
@@ -109,14 +105,14 @@ export default function Canvas({ color, width, tool }: ICanvas) {
   const download = async () => {
     const url = ctx!.canvas.toDataURL();
     const pic = url.substring(22, url.length);
-    await uploadPic(pic, currentUserEmail);
+    await uploadPic(pic);
   };
 
   return (
     <>
       <canvas
-        width={500}
-        height={500}
+        width={300}
+        height={300}
         onMouseDown={onMouseDown}
         onMouseUp={finishDraw}
         onMouseMove={onMouseMove}

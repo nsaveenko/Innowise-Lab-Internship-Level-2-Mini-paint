@@ -3,7 +3,7 @@ import { auth } from '../api/index';
 
 export interface IAuthContext {
   signin?: any;
-  signup?: any | null;
+  signup?: any;
   signout?: any;
   currentUserEmail?: any;
 }

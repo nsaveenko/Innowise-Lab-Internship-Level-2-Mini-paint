@@ -10,8 +10,6 @@ import { ITools } from './ITools';
 import './Tools.css';
 
 export default function Tools({ color, width, setColor, setWidth, setTool }: ITools) {
-  const cls = ['tool-item'];
-
   const handleSetWidth = (e: React.ChangeEvent<HTMLInputElement>) => {
     setWidth(e.target.value);
   };
@@ -60,22 +58,22 @@ export default function Tools({ color, width, setColor, setWidth, setTool }: ITo
           </button>
         </li>
         <li>
-          <button onClick={handleSetPen} className={cls.join(' ')} type='submit'>
+          <button onClick={handleSetPen} className='tool-item' type='submit'>
             <PenIcon width='2em' height='2em' />
           </button>
         </li>
         <li>
-          <button onClick={handleSetLine} className={cls.join(' ')} type='submit'>
+          <button onClick={handleSetLine} className='tool-item' type='submit'>
             <LineIcon width='2em' height='2em' />
           </button>
         </li>
         <li>
-          <button onClick={handleSetRectangle} className={cls.join(' ')} type='submit'>
+          <button onClick={handleSetRectangle} className='tool-item' type='submit'>
             <RectangleIcon width='2em' height='2em' />
           </button>
         </li>
         <li>
-          <button onClick={handleSetCircle} className={cls.join(' ')} type='submit'>
+          <button onClick={handleSetCircle} className='tool-item' type='submit'>
             <CircleIcon width='2em' height='2em' />
           </button>
         </li>

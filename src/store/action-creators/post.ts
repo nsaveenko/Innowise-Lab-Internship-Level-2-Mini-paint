@@ -1,11 +1,12 @@
 import { Dispatch } from 'react';
-import { IPostAction, PostActionTypes } from '../../types/post';
+import { IPostAction, PostActionTypes, IPost } from '../../types/post';
 import { ref } from '../../api/index';
+import { ERROR_MESSAGES, INFO_MESSAGES } from '../../utils/messages';
 
-const fetchPosts = async (dispatch: Dispatch<IPostAction>) => {
+export const fetchPosts = async (dispatch: Dispatch<IPostAction>) => {
   try {
     dispatch({ type: PostActionTypes.FETCH_POSTS });
-    const response = await ref
+    await ref
       .orderBy('date', 'desc')
       .get()
       .then((item) => {
@@ -20,4 +21,17 @@ const fetchPosts = async (dispatch: Dispatch<IPostAction>) => {
   }
 };
 
-export default fetchPosts;
+export const addPost = (post: IPost) => (dispatch: any) => {
+  try {
+    dispatch({ type: PostActionTypes.ADD_POST });
+    ref
+      .doc(post.id)
+      .set(post);
+    dispatch({ type: PostActionTypes.ADD_POST_SUCCESS, payload: INFO_MESSAGES.CREATED });
+  } catch (e) {
+    dispatch({
+      type: PostActionTypes.ADD_POST_ERROR,
+      payload: ERROR_MESSAGES.POST_NOT_UPLOADED_MESSAGE,
+    });
+  }
+};

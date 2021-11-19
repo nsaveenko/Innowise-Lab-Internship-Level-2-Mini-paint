@@ -12,7 +12,7 @@
 }
 
 .header-button {
-  width: 100px;
+  width: 70px;
 }
 
 .page-title {
@@ -32,11 +32,16 @@
 }
 
 .email-title {
+  display: none;
   font-weight: 300;
 }
 
-@media (max-width: 450px) {
+@media (min-width: 480px) {
   .email-title {
-    display: none;
+    display: inline-block;
+  }
+
+  .header-button {
+    width: 100px;
   }
 }

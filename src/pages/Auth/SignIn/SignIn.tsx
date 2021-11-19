@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { NavLink, useHistory } from 'react-router-dom';
-import ERRORS from '../../../utils/errors';
+import { ERROR_MESSAGES } from '../../../utils/messages';
 import { useAuth } from '../../../contexts/AuthContext';
 import '../Auth.css';
 
@@ -26,7 +26,7 @@ const SignIn: FC = () => {
       await signin(email, password);
       history.push('/editor');
     } catch {
-      toast.error(ERRORS.SIGN_IN_MESSAGE);
+      toast.error(ERROR_MESSAGES.SIGN_IN_MESSAGE);
     }
   }
 

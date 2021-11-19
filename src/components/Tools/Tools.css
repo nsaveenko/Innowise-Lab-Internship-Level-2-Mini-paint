@@ -4,8 +4,14 @@
 }
 
 .tools ul > li {
-  margin: auto 30px;
+  margin: auto 10px;
   padding: 5px;
+}
+
+@media (min-width: 768px) {
+  .tools ul > li {
+    margin: auto 30px;
+  }
 }
 
 .tool-list {

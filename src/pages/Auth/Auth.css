@@ -56,12 +56,3 @@
   color: #212529;
   border-bottom: 1px solid #fff;
 }
-
-.error-message {
-  border: 1px solid transparent;
-  border-radius: 10px;
-  padding: 10px;
-  margin-top: 20px;
-  background-color: #e4c8bf;
-  color: #890503;
-}

@@ -4,13 +4,14 @@ import { useDispatch } from 'react-redux';
 import Header from '../../components/Header/Header';
 import { useAuth } from '../../contexts/AuthContext';
 import useTypedSelector from '../../hooks/postTypeSelector';
-import fetchPosts from '../../store/action-creators/post';
+import { fetchPosts } from '../../store/action-creators/post';
+import { INFO_MESSAGES } from '../../utils/messages';
 import './Dashboard.css';
 
 const Dashboard: FC = () => {
+  const { currentUserEmail } = useAuth();
   const { posts, error, loading } = useTypedSelector((state) => state.post);
   const dispatch = useDispatch();
-  const { currentUserEmail } = useAuth();
   const users = Array.from(new Set(posts?.map((post) => post.email)));
   const [userSelectValue, setUserSelectValue] = useState(currentUserEmail);
 
@@ -50,7 +51,7 @@ const Dashboard: FC = () => {
           </select>
         </div>
         <ul className='pics-list'>
-          {loading && <h3>Loading....</h3>}
+          {loading && <h3 className='info-message'>{INFO_MESSAGES.LOADING}</h3>}
           {
             posts
               ?.filter(
@@ -59,7 +60,7 @@ const Dashboard: FC = () => {
               .map((post) => {
                 return (
                   <li key={post.id} className='pic-item'>
-                    <img src={post.path} alt='pic from firebase' />
+                    <img className='pic' src={post.path} alt='pic from firebase' />
                   </li>
                 );
               })

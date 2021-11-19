@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import SignUp from '../pages/Auth/SignUp/SignUp';
 import SignIn from '../pages/Auth/SignIn/SignIn';
@@ -6,7 +6,7 @@ import Dashboard from '../pages/Dashboard/Dashboard';
 import Editor from '../pages/Editor/Editor';
 import PrivateRoute from './PrivateRoute';
 
-const Router: React.FC = () => {
+const Router: FC = () => {
   return (
     <BrowserRouter>
       <Switch>

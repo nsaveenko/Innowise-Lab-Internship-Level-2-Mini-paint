@@ -17,7 +17,6 @@ body {
 #root {
   background: radial-gradient(100% 215.42% at 0% 0%, #1c77d3 0%, #48b3b8 100%), #fff;
   background-repeat: no-repeat;
-  min-height: 700px;
 }
 
 ul {
@@ -48,4 +47,8 @@ ul {
 
 .primary-button:hover {
   color:  #1f2324;
+}
+
+.info-message {
+  padding: 20px;
 }

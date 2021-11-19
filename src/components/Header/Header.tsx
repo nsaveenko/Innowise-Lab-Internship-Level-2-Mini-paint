@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import ERRORS from '../../utils/errors';
+import { ERROR_MESSAGES } from '../../utils/messages';
 import './Header.css';
 
 export default function Header() {
@@ -15,10 +15,9 @@ export default function Header() {
 
     try {
       await signout();
-      localStorage.removeItem('currentUser');
       history.push('/signin');
     } catch {
-      setError(ERRORS.SIGN_OUT_MESSAGE);
+      setError(ERROR_MESSAGES.SIGN_OUT_MESSAGE);
     }
   }
 

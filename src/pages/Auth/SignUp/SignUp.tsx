@@ -2,7 +2,7 @@ import React, { FC, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useAuth } from '../../../contexts/AuthContext';
-import ERRORS from '../../../utils/errors';
+import { ERROR_MESSAGES, INFO_MESSAGES } from '../../../utils/messages';
 import '../Auth.css';
 
 const SignUp: FC = () => {
@@ -29,17 +29,17 @@ const SignUp: FC = () => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      toast.error(ERRORS.SIGN_UP_MESSAGE_PASSWORD_CONFIRMATION);
+      toast.error(ERROR_MESSAGES.SIGN_UP_MESSAGE_PASSWORD_CONFIRMATION);
     } else if (password.length < 6) {
-      toast.error(ERRORS.SIGN_UP_MESSAGE_PASSWORD_LENGTH);
+      toast.error(ERROR_MESSAGES.SIGN_UP_MESSAGE_PASSWORD_LENGTH);
     } else {
       try {
         setLoading(true);
         await signup(email, password);
-        toast.success('Created!');
+        toast.success(INFO_MESSAGES.CREATED);
         history.push('/signin');
       } catch {
-        toast.error(ERRORS.SIGN_UP_MESSAGE_ACCOUNT_CREATION);
+        toast.error(ERROR_MESSAGES.SIGN_UP_MESSAGE_ACCOUNT_CREATION);
       }
       setLoading(false);
     }
