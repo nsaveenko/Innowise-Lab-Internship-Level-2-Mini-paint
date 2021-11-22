@@ -5,7 +5,7 @@ export interface IAuthContext {
   signin?: any;
   signup?: any;
   signout?: any;
-  currentUserEmail?: any;
+  currentUserEmail?: string;
 }
 
 const AuthContext = React.createContext<IAuthContext>({});
