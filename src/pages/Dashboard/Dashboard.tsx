@@ -13,7 +13,7 @@ const Dashboard: FC = () => {
   const { posts, error, loading } = useTypedSelector((state) => state.post);
   const dispatch = useDispatch();
   const users = Array.from(new Set(posts?.map((post) => post.email)));
-  const [userSelectValue, setUserSelectValue] = useState(currentUserEmail);
+  const [userSelectValue, setUserSelectValue] = useState<string>(currentUserEmail || '');
 
   useEffect(() => {
     dispatch(fetchPosts);

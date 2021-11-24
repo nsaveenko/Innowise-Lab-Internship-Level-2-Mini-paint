@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 export interface IPostState {
-  posts?: any[];
+  posts?: Array<IPost>;
   loading: boolean;
   error: null | string;
 }
@@ -8,7 +8,7 @@ export interface IPostState {
 export interface IPost {
   id: string;
   email: string;
-  date: any;
+  date: number;
   path: string;
 }
 
@@ -27,7 +27,7 @@ interface IFetchPostAction {
 
 interface IFetchPostSuccessAction {
   type: PostActionTypes.FETCH_POSTS_SUCCESS;
-  payload: any[];
+  payload: Array<IPost>;
 }
 
 interface IFetchPostErrorAction {

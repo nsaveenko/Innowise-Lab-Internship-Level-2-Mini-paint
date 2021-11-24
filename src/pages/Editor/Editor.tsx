@@ -35,7 +35,7 @@ const Editor: FC = () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           dispatch(addPost({
             id,
-            email: currentUserEmail,
+            email: currentUserEmail || '',
             path: downloadURL,
             date: Date.now(),
           }));
